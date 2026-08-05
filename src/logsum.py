@@ -37,7 +37,7 @@ def summarise(input_path: Path, output_path: Path) -> int:
     with input_path.open(newline="", encoding="utf-8") as fh:
         reader = csv.DictReader(fh)
         for row_num, row in enumerate(reader, start=2):  # row 1 = header
-            service = (row.get("service") or "").strip().lower()
+            service = (row.get("service") or "").strip().lower();
             level_raw = (row.get("level") or "").strip().upper()
             level = level_raw or "UNKNOWN"          # § 4: missing level → UNKNOWN
             ts_raw = (row.get("timestamp") or "").strip()

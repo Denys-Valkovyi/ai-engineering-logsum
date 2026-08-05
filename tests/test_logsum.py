@@ -12,12 +12,9 @@ Coverage map (spec section → test class):
 
 import csv
 import os
-import re
 import subprocess
 import sys
 from pathlib import Path
-
-import pytest
 
 PROJECT_ROOT = Path(__file__).parent.parent
 
@@ -557,6 +554,7 @@ class TestCLI:
             [sys.executable, "-m", "src.logsum"],
             capture_output=True, text=True,
             cwd=str(tmp_path), env=env,
+            check=False,
         )
         assert result.returncode == 0
         assert (data_dir / "summary.csv").exists()
@@ -579,6 +577,7 @@ class TestCLI:
             [sys.executable, "-m", "src.logsum", str(inp)],
             capture_output=True, text=True,
             cwd=str(tmp_path), env=env,
+            check=False,
         )
         assert result.returncode == 0
         assert (data_dir / "summary.csv").exists()
