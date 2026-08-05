@@ -557,6 +557,7 @@ class TestCLI:
             [sys.executable, "-m", "src.logsum"],
             capture_output=True, text=True,
             cwd=str(tmp_path), env=env,
+            check=False,
         )
         assert result.returncode == 0
         assert (data_dir / "summary.csv").exists()
@@ -579,6 +580,7 @@ class TestCLI:
             [sys.executable, "-m", "src.logsum", str(inp)],
             capture_output=True, text=True,
             cwd=str(tmp_path), env=env,
+            check=False,
         )
         assert result.returncode == 0
         assert (data_dir / "summary.csv").exists()

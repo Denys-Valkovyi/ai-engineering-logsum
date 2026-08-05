@@ -15,6 +15,7 @@ def _run(args, cwd=None):
         capture_output=True,
         text=True,
         cwd=str(cwd or PROJECT_ROOT),
+        check=False,
     )
 
 
