@@ -12,12 +12,9 @@ Coverage map (spec section → test class):
 
 import csv
 import os
-import re
 import subprocess
 import sys
 from pathlib import Path
-
-import pytest
 
 PROJECT_ROOT = Path(__file__).parent.parent
 
