@@ -8,6 +8,7 @@ Coverage map (spec section → test class):
   §5       Malformed timestamp        → TestMalformedTimestamp
   §6       Empty input                → TestEmptyInput
   §7       CLI / exit codes           → TestCLI
+  §8       --min-count filter         → TestMinCount
 """
 
 import csv
@@ -476,6 +477,66 @@ class TestEmptyInput:
         content = out.read_text(encoding="utf-8").strip()
         data_lines = [l for l in content.splitlines()[1:] if l.strip()]
         assert data_lines == []
+
+
+# ---------------------------------------------------------------------------
+# §8 – --min-count filter
+# ---------------------------------------------------------------------------
+
+class TestMinCount:
+    """Two-group fixture: group A (svc-a/INFO) count=3, group B (svc-b/WARN) count=1."""
+
+    def _make_two_group_csv(self, path):
+        _write_csv(path, [
+            {"timestamp": "2024-01-01T08:00:00", "level": "INFO",
+             "service": "svc-a", "message": ""},
+            {"timestamp": "2024-01-01T09:00:00", "level": "INFO",
+             "service": "svc-a", "message": ""},
+            {"timestamp": "2024-01-01T10:00:00", "level": "INFO",
+             "service": "svc-a", "message": ""},
+            {"timestamp": "2024-01-01T11:00:00", "level": "WARN",
+             "service": "svc-b", "message": ""},
+        ])
+
+    def test_default_keeps_all_groups(self, run, tmp_path):
+        inp, out = tmp_path / "e.csv", tmp_path / "s.csv"
+        self._make_two_group_csv(inp)
+        run([str(inp), str(out)])
+        rows = _read_csv(out)
+        assert len(rows) == 2
+
+    def test_min_count_1_keeps_all_groups(self, run, tmp_path):
+        inp, out = tmp_path / "e.csv", tmp_path / "s.csv"
+        self._make_two_group_csv(inp)
+        run(["--min-count", "1", str(inp), str(out)])
+        rows = _read_csv(out)
+        assert len(rows) == 2
+
+    def test_groups_below_threshold_excluded(self, run, tmp_path):
+        inp, out = tmp_path / "e.csv", tmp_path / "s.csv"
+        self._make_two_group_csv(inp)
+        run(["--min-count", "2", str(inp), str(out)])
+        rows = _read_csv(out)
+        assert len(rows) == 1
+        assert rows[0]["service"] == "svc-a"
+
+    def test_groups_equal_to_threshold_included(self, run, tmp_path):
+        inp, out = tmp_path / "e.csv", tmp_path / "s.csv"
+        self._make_two_group_csv(inp)
+        run(["--min-count", "3", str(inp), str(out)])
+        rows = _read_csv(out)
+        assert len(rows) == 1
+        assert rows[0]["count"] == "3"
+
+    def test_all_groups_filtered_writes_header_only(self, run, tmp_path):
+        inp, out = tmp_path / "e.csv", tmp_path / "s.csv"
+        self._make_two_group_csv(inp)
+        result = run(["--min-count", "4", str(inp), str(out)])
+        assert result.returncode == 0
+        assert _read_csv(out) == []
+        assert _read_header(out) == [
+            "service", "level", "count", "first_seen", "last_seen"
+        ]
 
 
 # ---------------------------------------------------------------------------
