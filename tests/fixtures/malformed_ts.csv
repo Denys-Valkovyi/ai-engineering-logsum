@@ -1,0 +1,4 @@
+timestamp,level,service,message
+not-a-date,INFO,checkout-service,bad ts row one
+2024-06-15T09:00:00,INFO,checkout-service,good ts row
+totally-wrong,ERROR,cart-api,bad ts different service

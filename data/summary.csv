@@ -1,0 +1,4 @@
+service,level,count,first_seen,last_seen
+cart-api,ERROR,1,2024-01-01T11:00:00+00:00,2024-01-01T11:00:00+00:00
+cart-api,UNKNOWN,1,2024-01-01T09:00:00+00:00,2024-01-01T09:00:00+00:00
+checkout-service,INFO,2,2024-01-01T10:00:00+00:00,2024-01-01T10:05:00+00:00

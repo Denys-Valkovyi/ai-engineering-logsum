@@ -1,0 +1,4 @@
+timestamp,level,service,message
+2024-01-01T10:00:00,,cart-api,unknown severity first
+2024-01-01T11:00:00,,cart-api,unknown severity second
+2024-01-01T12:00:00,INFO,cart-api,normal row

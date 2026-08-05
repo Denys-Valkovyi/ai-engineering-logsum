@@ -1,0 +1,5 @@
+timestamp,level,service,message
+2024-01-01T10:00:00,INFO,checkout-service,order placed
+2024-01-01T10:05:00,INFO,checkout-service,order confirmed
+2024-01-01T11:00:00,ERROR,cart-api,item not found
+2024-01-01T09:00:00,,cart-api,unknown severity
