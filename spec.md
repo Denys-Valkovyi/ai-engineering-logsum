@@ -57,11 +57,14 @@ data rows, then exits with code **0**. This is not treated as an error.
 ## 7. CLI Interface and Exit Codes
 
 ```
-Usage: python -m src.logsum [INPUT [OUTPUT]]
+Usage: python -m src.logsum [--min-count N] [INPUT [OUTPUT]]
 
 Arguments:
   INPUT   Path to input CSV   [default: data/events.csv]
   OUTPUT  Path to output CSV  [default: data/summary.csv]
+
+Options:
+  --min-count N  Only output groups with count >= N  [default: 1]
 ```
 
 Both arguments are optional positional args. Supplying only `INPUT` uses the
@@ -79,7 +82,21 @@ also goes to stderr. Only the CSV content itself is written to the output file.
 If the output directory does not exist, the tool creates it (including any
 intermediate directories). This is not treated as an error.
 
-## 8. Explicit Out-of-Scope Items
+## 8. --min-count Filter
+
+When `--min-count N` is supplied, only groups whose `count` is **≥ N** are
+written to the output. Groups below the threshold are silently omitted.
+
+| N | Effect |
+|---|---|
+| omitted (default) | All groups are written (equivalent to `--min-count 1`) |
+| `1` | All groups are written |
+| `> 1` | Groups with `count < N` are excluded from output |
+
+This filter is applied after all grouping and aggregation; timestamps and counts
+are computed over the full input before any group is dropped.
+
+## 9. Explicit Out-of-Scope Items
 
 The following are **not** part of this specification and must not be implemented
 without a separate spec:
