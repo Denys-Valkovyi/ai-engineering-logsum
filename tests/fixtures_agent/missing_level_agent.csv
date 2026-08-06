@@ -1,0 +1,3 @@
+timestamp,service,message
+2024-01-01T00:00:00,checkout-service,no level column here
+2024-01-01T00:01:00,checkout-service,still no level column

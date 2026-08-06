@@ -1,0 +1,3 @@
+timestamp,level,service,message
+not-a-date,INFO,checkout-service,event with malformed timestamp
+2024-01-01T00:01:00,INFO,checkout-service,event with valid timestamp
