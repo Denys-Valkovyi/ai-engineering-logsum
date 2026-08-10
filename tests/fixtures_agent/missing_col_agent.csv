@@ -1,0 +1,3 @@
+ts,lvl,svc,msg
+2024-01-01T00:00:00,INFO,checkout-service,col names do not match spec
+2024-01-01T00:01:00,WARN,cart-api,all rows should be skipped

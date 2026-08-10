@@ -1,0 +1,3 @@
+gap #1 - Synthetic-data rule exists to prevent accidental exposure of real customer logs; agent sees the rule but not the reason. Refresh if the data-handling policy changes.
+gap #2 - spec.md is locked after sign-off to prevent the agent from re-speccing already-approved work. Refresh on spec review
+gap #3 - Supervised vs. async tradeoffs for this repo are documented in by-hand-vs-agent.md — empirical findings from the Wide series that the agent can't infer from the code. Refresh after each completed kata series adds new supervised/async findings.

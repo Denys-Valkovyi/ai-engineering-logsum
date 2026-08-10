@@ -1,0 +1,7 @@
+timestamp,level,service,message
+2024-01-01T00:00:00,INFO,checkout-service,checkout started
+2024-01-01T00:01:00,INFO,checkout-service,checkout complete
+2024-01-01T00:02:00,ERROR,checkout-service,payment failed
+2024-01-01T00:00:00,INFO,cart-api,cart created
+2024-01-01T00:01:00,WARN,cart-api,item not found
+2024-01-01T00:02:00,ERROR,cart-api,cart error
